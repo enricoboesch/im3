@@ -1,6 +1,4 @@
 <?php
-
-header('Content-Type: text/plain; charset=utf-8');
-
-$handle = fopen('hotel_daten.csv', 'r');
-
+foreach (file('hotel_daten.csv') as $zeile) {
+    echo $zeile . "<br>";
+};
