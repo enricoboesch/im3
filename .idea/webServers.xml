@@ -2,7 +2,7 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="9cb6a184-a53c-48db-b30d-e86f26fda0e6" name="Hotels" url="http://sl2679.web.hostpoint.ch">
+      <webServer id="9cb6a184-a53c-48db-b30d-e86f26fda0e6" name="Hotels" url="http://hotels.wabizabi.myhostpoint.ch">
         <fileTransfer host="sl2679.web.hostpoint.ch" port="21">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
