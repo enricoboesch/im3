@@ -1,4 +1,4 @@
 <?php
-foreach (file('hotel_daten.csv') as $zeile) {
+foreach (file('Datenbank/hotel_daten.csv') as $zeile) {
     echo $zeile . "<br>";
 };
