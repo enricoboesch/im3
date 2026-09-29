@@ -235,12 +235,6 @@ foreach ($cantonRowsByYear as $year => $rows) {
     }
 
     foreach ($rows as $row) {
-        // Abgeleiteter Wert, der erst hier und nur einmal gerundet wird. Wer
-        // Hotels und Betten schon vorher runden würde, verschöbe das Ergebnis.
-        // Der Fall 0 Hotels wird abgefangen, damit nicht durch 0 geteilt wird.
-        $row['beds_per_hotel'] = $row['registered_hotels'] > 0
-            ? round($row['available_beds'] / $row['registered_hotels'], 1)
-            : null;
         $transformedRows[] = $row;
     }
 
