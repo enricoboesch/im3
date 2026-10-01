@@ -263,7 +263,7 @@ $audit['output_rows'] = count($transformedRows);
 
 // Der Rückgabewert ist der Datenvertrag dieses Schritts: ein PHP-Array, kein JSON.
 //
-// Zusätzlich zu question, rules, data und audit gibt es den Schlüssel national.
+// Zusätzlich zu question, rules, data und audit gibt es den Schlüssel national..
 // Dort liegen die Schweiz-Werte getrennt von den Kantonen. So kann ein Chart die
 // Landeslinie als Referenz zeigen, ohne dass sie in data mitgezählt wird.
 return [
