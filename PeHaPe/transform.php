@@ -27,7 +27,7 @@
 // Alle Entscheide stehen als benannte Variablen zuoberst und nicht als nackte
 // Zahlen im Code. Wer eine Regel ändert, sieht sofort, wie sich die Daten ändern.
 
-$csvPath = __DIR__ . '/hotel_daten.csv';
+$csvPath = __DIR__ . 'Datenbank/hotel_daten.csv';
 
 // Genau diese Spalten in genau dieser Reihenfolge erwartet der Code. Weicht der
 // Header ab, stimmen alle Indizes unten nicht mehr.
