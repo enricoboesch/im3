@@ -35,8 +35,8 @@ try {
                    hs.registered_hotels,
                    hs.available_beds,
                    hs.bed_occupancy
-            FROM hotel_statistic AS hs
-            JOIN cities AS c ON c.id = hs.canton_id';
+            FROM hotel_statistics AS hs
+            JOIN cantons AS c ON c.id = hs.canton_id';
 
 
 
@@ -44,19 +44,19 @@ try {
 
     if ($canton !== '') {
         $sql .= ' WHERE c.canton = :canton';
-        $params['city'] = $city;
+        $params['canton'] = $canton;
     }
 
     $sql .= ' ORDER BY hs.year, c.canton';
 
-        $statement = $pdo->prepare($sql);
+    $statement = $pdo->prepare($sql);
     $statement->execute($params);
 
-    $rows = $statement->fetchAll();
+    $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 
 
-        $data = array_map('normalizeHotels', $rows);
+    $data = array_map('normalizeHotels', $rows);
 
 
     echo json_encode($data, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
