@@ -64,3 +64,4 @@ foreach ($rows as $row) {
 
 echo count($rows) . ' Zeilen geladen.';
 
+//Endlich geklappt.
