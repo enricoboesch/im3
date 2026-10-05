@@ -24,9 +24,7 @@ function datasetFor(rows, canton) {
     return {
         label: canton,
 
-        data: cantonRows.map(
-            (row) => row.registered_hotels
-        ),
+        data: cantonRows.map((row) => row.bed_occupancy),
 
         borderWidth: 2,
         pointRadius: 0,
@@ -117,11 +115,12 @@ async function loadHotelChart() {
                     },
 
                     y: {
-                        beginAtZero: true,
+                        min: 0,
+                        max: 100,
 
                         title: {
                             display: true,
-                            text: 'Anzahl Hotels'
+                            text: 'Bettenauslastung (%)'
                         }
                     }
                 }
