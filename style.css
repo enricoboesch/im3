@@ -12,10 +12,32 @@ body {
 }
 
 /* img oben und unten über die ganze Seitenbreite */
-.site-header,
-.footer-image {
+.site-header {
     width: 100%;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+    position: relative;
+}
+
+.header-image {
+    width: 100%;
+    height: 80%;
+    object-fit: cover;
     display: block;
+}
+
+.title-banner {
+    height: 20%;
+
+    display: flex;
+    align-items: center;
+
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 /* Der restliche Inhalt bleibt in einem Rahmen */
@@ -28,29 +50,33 @@ body {
 
 h1 {
     font-weight: 400;
-    font-size: 4rem;
+    font-size: 8rem;
     line-height: 1;
-    margin-bottom: 1.5rem;
+    margin: 0;
+    font-variation-settings: "opsz" 72;
 }
 
 h2 {
     font-weight: 400;
-    font-size: 2.8rem;
+    font-size: 5rem;
     line-height: 1.1;
     margin-bottom: 1rem;
+    font-variation-settings: "opsz" 72;
 }
 
 .lead {
     font-weight: 400;
-    font-size: 1.4rem;
-    line-height: 1.5;
+    font-size: 1.5rem;
+    line-height: 1.4;
     margin-bottom: 2rem;
+    font-variation-settings: "opsz" 72;
 }
 
 p {
     font-weight: 400;
     font-size: 1rem;
     line-height: 1.6;
+    font-variation-settings: "opsz" 72;
 }
 
 .text-columns {
@@ -63,4 +89,98 @@ p {
     width: 100%;
     height: 600px;
     margin: 3rem 0;
+}
+
+/* Banner oben */
+.title-banner {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.title-track {
+    display: inline-flex;
+    gap: 60px;
+    animation: ticker 15s linear infinite;
+}
+
+@keyframes ticker {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+/* Seitennavigation */
+
+.jump-nav {
+    position: absolute;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 90%;
+    max-width: 1200px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    z-index: 10;
+}
+
+.jump-nav a {
+    color: white;
+    text-decoration: none;
+    font-family: "Literata", "Times New Roman", Times, serif;
+    font-size: 1.5rem;
+    font-variation-settings: "opsz" 72;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/*Grafik
+ */
+.chart-controls {
+    margin-top: 1.5rem;
+}
+
+.chart-controls label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.chart-controls select {
+    font-family: "Literata", "Times New Roman", Times, serif;
+    font-size: 1rem;
+    padding: 8px 12px;
+    min-width: 250px;
+}
+
+.selected-cantons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 1rem;
+}
+
+.canton-tag {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    border: 1px solid #111;
+    padding: 6px 10px;
+}
+
+.canton-tag button {
+    border: none;
+    background: none;
+    font-size: 1.2rem;
+    cursor: pointer;
 }

@@ -8,13 +8,32 @@
     <title>Schweizer Hotel-Sterben</title>
 
     <link rel="stylesheet" href="style.css">
+    <!-- Schrift -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
 <header class="site-header">
-    <img src="img/header.jpg" alt="header hotelsterben">
-    <h1>Das Schweizer Hotel-Sterben</h1>
+    <nav class="jump-nav">
+        <a href="#hotelsterben">Hotel-Sterben</a>
+        <a href="#corona">Corona</a>
+        <a href="#vergleich">2005 vs 2025</a>
+        <a href="#fazit">Fazit</a>
+    </nav>
+
+    <img class=header-image src="img/header.jpg" alt="header hotelsterben">
+    <div class="title-banner">
+        <div class="title-track">
+            <h1>Das Schweizer Hotel-Sterben</h1>
+            <h1>Das Schweizer Hotel-Sterben</h1>
+            <h1>Das Schweizer Hotel-Sterben</h1>
+            <h1>Das Schweizer Hotel-Sterben</h1>
+        </div>
+    </div>
 </header>
 
 
@@ -22,7 +41,7 @@
 
 
     <!-- INTRO -->
-    <section class="intro">
+    <section id="hotelsterben" class="intro">
         <p class="lead">
             Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
             nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
@@ -52,9 +71,21 @@
 
         </div>
 
-        <!-- Grafik 1 kommt später hier hin -->
+        <!-- Grafik 1 -->
         <div class="chart-container">
             <canvas id="hotelChart"></canvas>
+        </div>
+
+        <div class="chart-controls">
+
+            <label for="cantonSelect">Kanton hinzufügen:</label>
+
+            <select id="cantonSelect">
+                <option value="">Kanton auswählen</option>
+            </select>
+
+            <div id="selectedCantons" class="selected-cantons"></div>
+
         </div>
 
     </section>
@@ -63,7 +94,7 @@
     <!-- CORONA -->
     <section class="corona">
 
-        <h2>Was passierte während Corona?</h2>
+        <h2 id="corona">Was passierte während Corona?</h2>
 
         <p class="lead">
             Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
@@ -84,7 +115,7 @@
     <!-- VERGLEICH -->
     <section class="comparison">
 
-        <h2>2005 und 2025 im Vergleich</h2>
+        <h2 id="vergleich">2005 und 2025 im Vergleich</h2>
 
         <p class="lead">
             Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
@@ -122,7 +153,7 @@
     <!-- FAZIT -->
     <section class="conclusion">
 
-        <h2>Was bedeutet das?</h2>
+        <h2 id="fazit">Was bedeutet das?</h2>
 
         <p class="lead">
             Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam

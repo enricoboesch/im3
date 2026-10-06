@@ -1,4 +1,3 @@
-// Erstellt die Liste der Jahre für die X-Achse
 function yearsOf(rows) {
     return [...new Set(
         rows.map((row) => row.year)
@@ -6,7 +5,6 @@ function yearsOf(rows) {
 }
 
 
-// Findet alle Kantone
 function cantonNamesOf(rows) {
     return [...new Set(
         rows.map((row) => row.canton)
@@ -14,7 +12,6 @@ function cantonNamesOf(rows) {
 }
 
 
-// Erstellt für einen Kanton eine Linie
 function datasetFor(rows, canton) {
 
     const cantonRows = rows
@@ -24,7 +21,9 @@ function datasetFor(rows, canton) {
     return {
         label: canton,
 
-        data: cantonRows.map((row) => row.bed_occupancy),
+        data: cantonRows.map(
+            (row) => row.bed_occupancy
+        ),
 
         borderWidth: 2,
         pointRadius: 0,
@@ -33,54 +32,53 @@ function datasetFor(rows, canton) {
 }
 
 
-// Daten laden
 async function loadHotelChart() {
 
     const response = await fetch('PeHaPe/unload.php');
 
-
-    // Prüfen, ob die Anfrage funktioniert hat
     if (!response.ok) {
         throw new Error(
             `Der Endpunkt antwortet mit Status ${response.status}.`
         );
     }
 
-
-    // Prüfen, ob wirklich JSON zurückkommt
-    const contentType =
-        response.headers.get('content-type') ?? '';
-
-    if (!contentType.includes('application/json')) {
-        throw new Error('Die Antwort ist kein JSON.');
-    }
-
-
-    // JSON in JavaScript umwandeln
     const hotels = await response.json();
 
 
-    // Nur Jahre 2006 bis 2025
+    // Nur Daten von 2006 bis 2025
     const chartData = hotels.filter(
         (row) => row.year >= 2006 && row.year <= 2025
     );
 
 
-    // Jahre bestimmen
     const years = yearsOf(chartData);
-
-
-    // Kantone bestimmen
     const cantons = cantonNamesOf(chartData);
 
 
-    // Für jeden Kanton eine Linie erstellen
-    const datasets = cantons.map(
-        (canton) => datasetFor(chartData, canton)
-    );
+    const cantonSelect =
+        document.querySelector('#cantonSelect');
+
+    const selectedCantonsContainer =
+        document.querySelector('#selectedCantons');
 
 
-    // Chart erstellen
+    // Hier werden alle ausgewählten Kantone gespeichert
+    let selectedCantons = [];
+
+
+    // Alle Kantone ins Dropdown schreiben
+    cantons.forEach((canton) => {
+
+        const option = document.createElement('option');
+
+        option.value = canton;
+        option.textContent = canton;
+
+        cantonSelect.appendChild(option);
+    });
+
+
+    // Chart einmal erstellen
     const chart = new Chart(
         document.querySelector('#hotelChart'),
         {
@@ -88,7 +86,7 @@ async function loadHotelChart() {
 
             data: {
                 labels: years,
-                datasets: datasets
+                datasets: []
             },
 
             options: {
@@ -96,17 +94,35 @@ async function loadHotelChart() {
                 maintainAspectRatio: false,
 
                 interaction: {
-                    mode: 'index',
+                    mode: 'nearest',
                     intersect: false
                 },
 
                 plugins: {
+
                     legend: {
                         display: false
+                    },
+
+                    tooltip: {
+                        mode: 'nearest',
+                        intersect: false,
+
+                        callbacks: {
+
+                            label: function(context) {
+
+                                return context.dataset.label
+                                    + ': '
+                                    + context.parsed.y
+                                    + '%';
+                            }
+                        }
                     }
                 },
 
                 scales: {
+
                     x: {
                         title: {
                             display: true,
@@ -127,8 +143,94 @@ async function loadHotelChart() {
             }
         }
     );
+
+
+    // Diese Funktion aktualisiert Linien und Tags
+    function render() {
+
+        // Für jeden ausgewählten Kanton eine Linie erstellen
+        chart.data.datasets = selectedCantons.map(
+            (canton) => datasetFor(chartData, canton)
+        );
+
+        chart.update();
+
+
+        // Tags leeren
+        selectedCantonsContainer.innerHTML = '';
+
+
+        // Tags neu erstellen
+        selectedCantons.forEach((canton) => {
+
+            const tag = document.createElement('div');
+            tag.classList.add('canton-tag');
+
+
+            const name = document.createElement('span');
+            name.textContent = canton;
+
+
+            const removeButton =
+                document.createElement('button');
+
+            removeButton.type = 'button';
+            removeButton.textContent = '×';
+
+
+            // Kanton wieder entfernen
+            removeButton.addEventListener(
+                'click',
+                function() {
+
+                    selectedCantons =
+                        selectedCantons.filter(
+                            (item) => item !== canton
+                        );
+
+                    render();
+                }
+            );
+
+
+            tag.appendChild(name);
+            tag.appendChild(removeButton);
+
+            selectedCantonsContainer.appendChild(tag);
+        });
+    }
+
+
+    // Wenn im Dropdown ein Kanton gewählt wird
+    cantonSelect.addEventListener(
+        'change',
+        function() {
+
+            const selectedCanton =
+                cantonSelect.value;
+
+
+            // Nur hinzufügen, wenn noch nicht gewählt
+            if (
+                selectedCanton !== ''
+                && !selectedCantons.includes(selectedCanton)
+            ) {
+                selectedCantons.push(selectedCanton);
+            }
+
+
+            // Dropdown wieder zurücksetzen
+            cantonSelect.value = '';
+
+
+            render();
+        }
+    );
+
+
+    render();
 }
 
 
-// Funktion starten
+// Start
 loadHotelChart();
