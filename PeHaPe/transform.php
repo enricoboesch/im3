@@ -25,6 +25,7 @@ foreach ($rows as $row) {
 
     // "Schweiz" ist eine Summenzeile, kein Kanton
     // continue = diese Zeile überspringen und mit der nächsten weitermachen
+    //Hier könnte man die Range der Jahresbereiche setten!
     if ($item['canton'] === 'Schweiz') {
         continue;
     }
