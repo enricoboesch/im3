@@ -25,11 +25,16 @@ foreach ($rows as $row) {
 
     // "Schweiz" ist eine Summenzeile, kein Kanton
     // continue = diese Zeile überspringen und mit der nächsten weitermachen
-    //Hier könnte man die Range der Jahresbereiche setten!
+    // "Schweiz" ist eine Summenzeile, kein Kanton
     if ($item['canton'] === 'Schweiz') {
         continue;
     }
 
+    // Nur Jahre von 2005 bis 2025 übernehmen, alle anderen überspringen
+    $year = (int) $item['year'];
+    if ($year < 2005 || $year > 2025) {
+        continue;
+    }
     // Neue, saubere Zeile zur Liste hinzufügen
     $data[] = [
         'year'              => (int) $item['year'],                                   // (int) macht aus dem Text eine ganze Zahl
