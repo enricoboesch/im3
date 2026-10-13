@@ -181,8 +181,8 @@ async function loadHotelChart() {
 
                     // Y-Achse = Bettenauslastung
                     y: {
-                        min: 0,
-                        max: 100,
+                        min: 10,
+                        max: 60,
 
                         title: {
                             display: true,
@@ -337,8 +337,8 @@ async function loadCoronaChart() {
 
 
     // Startjahr:
-    // Index 2 bedeutet 2021
-    let currentYearIndex = 2;
+    // Index 0 bedeutet 2019
+    let currentYearIndex = 0;
 
 
     // Überschrift mit aktuellem Jahr
@@ -436,7 +436,7 @@ async function loadCoronaChart() {
                     // Y-Achse von 0 bis 100 Prozent
                     y: {
                         min: 0,
-                        max: 100,
+                        max: 60,
 
                         ticks: {
 

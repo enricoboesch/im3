@@ -7,7 +7,7 @@
 .chart-container {
     width: 100%;
     max-width: 1400px;
-    height: 650px;
+    height: 400px;
     margin: auto;
 }
 
@@ -64,10 +64,10 @@ h1 {
 
 h2 {
     font-weight: 400;
-    font-size: 5rem;
+    font-size: 4.5rem;
     line-height: 1.1;
     margin-bottom: 1rem;
-    margin-top: 10rem;
+    margin-top: 4rem;
     font-variation-settings: "opsz" 72;
 }
 
@@ -75,7 +75,7 @@ h2 {
     font-weight: 400;
     font-size: 1.5rem;
     line-height: 1.6;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     font-variation-settings: "opsz" 72;
 }
 
@@ -84,7 +84,7 @@ p {
     font-size: 1rem;
     line-height: 1.6;
     font-variation-settings: "opsz" 72;
-    margin-bottom: 4rem;
+    margin-bottom: 2rem;
 }
 
 .text-columns {
@@ -104,7 +104,7 @@ p {
 .title-track {
     display: inline-flex;
     gap: 60px;
-    animation: ticker 15s linear infinite;
+    animation: ticker 40s linear infinite;
 }
 
 @keyframes ticker {
@@ -150,7 +150,7 @@ html {
 /*Grafik
  */
 .chart-controls {
-    margin-top: 1.5rem;
+    margin-top: 0.5rem;
 }
 
 .chart-controls label {
@@ -201,7 +201,7 @@ html {
 
 .year-navigation h2 {
     margin: 0;
-    font-size: 4rem;
+    font-size: 2.5rem;
 }
 
 .year-navigation button {
@@ -326,5 +326,47 @@ html {
     font-size: 1.5rem;
     font-weight: 400;
     font-variation-settings: "opsz" 72;
-}}
+}
 
+/* Responsive */
+
+@media (max-width: 768px) {
+
+    nav a {
+        font-size: 4.25vw
+    }
+
+    .content-wrapper{
+        padding: 0rem;
+    }
+
+    h1{
+        font-size: 13vw;
+    }
+
+    h2{
+        font-size: 10vw;
+        margin-top: 2rem;
+    }
+
+    .lead{
+        font-size: 1.25rem;
+    }
+
+    .text-columns{
+        display: grid;
+        grid-template-columns: 1fr;
+        font-size: 4.5vw;
+        line-height: 4.5vw;
+        gap: 0px;
+    }
+
+    p{
+        margin-bottom: 0rem;
+    }
+
+    .chart-container{
+        margin-top: 1rem;
+    }
+
+}
