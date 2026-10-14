@@ -51,7 +51,6 @@ body {
     width: 90%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 3rem 0;
 }
 
 h1 {
@@ -277,10 +276,6 @@ html {
     border-color: var(--bar-green);
 }
 
-.conclusion {
-    margin-bottom: 6rem;
-}
-
 
 /* Footer */
 .site-footer {
@@ -295,13 +290,14 @@ html {
     width: 100%;
     height: auto;
     display: block;
+    padding-top:2rem;
 }
 
 
 /* Credits gleich positioniert wie obere Navigation */
 .credits {
     position: absolute;
-    top: 24px;
+    top: 4rem;
     left: 50%;
     transform: translateX(-50%);
 
