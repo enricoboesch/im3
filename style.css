@@ -365,4 +365,13 @@ html {
         margin-top: 1rem;
     }
 
+    .comparison-grid{
+        gap: 0.5rem;
+        margin: 1rem auto;
+    }
+
+    .credits p{
+        font-size: 0.8rem;
+    }
+
 }
