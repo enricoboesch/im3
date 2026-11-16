@@ -102,7 +102,11 @@ async function loadHotelChart() {
 
 
     // Hier werden die ausgewählten Kantone gespeichert
-    let selectedCantons = [];
+    let selectedCantons = [
+        'Zürich',
+        'Jura',
+        'Tessin'
+    ];
 
 
     // Alle Kantone ins Dropdown schreiben
@@ -582,3 +586,225 @@ async function loadCoronaChart() {
 
 // Grafik 2 starten
 loadCoronaChart();
+
+// --------------------------------------------------
+// GRAFIK 3 – Hotels vs. belegte Betten
+// --------------------------------------------------
+
+
+// Lädt und erstellt die Vergleichsgrafik
+async function loadHotelsBedsChart() {
+
+    // Daten aus dem PHP-Endpunkt laden
+    const response = await fetch('PeHaPe/unload.php');
+
+
+    // Fehler anzeigen, falls der Endpunkt nicht funktioniert
+    if (!response.ok) {
+        throw new Error(
+            `Der Endpunkt antwortet mit Status ${response.status}.`
+        );
+    }
+
+
+    // JSON-Daten lesen
+    const hotels = await response.json();
+
+
+    // Nur Daten von 2005 bis 2025 verwenden
+    const chartData = hotels.filter(
+        (row) => row.year >= 2005 && row.year <= 2025
+    );
+
+
+    // Alle vorhandenen Jahre holen
+    const years = [
+        ...new Set(
+            chartData.map((row) => row.year)
+        )
+    ].sort((a, b) => a - b);
+
+
+    // Gesamtzahl Hotels pro Jahr berechnen
+    const hotelsPerYear = years.map((year) => {
+
+        const rows = chartData.filter(
+            (row) => row.year === year
+        );
+
+        return rows.reduce(
+            (sum, row) => sum + row.registered_hotels,
+            0
+        );
+    });
+
+
+    // Belegte Betten pro Jahr berechnen
+    const occupiedBedsPerYear = years.map((year) => {
+
+        const rows = chartData.filter(
+            (row) => row.year === year
+        );
+
+        return rows.reduce(
+            (sum, row) => {
+
+                const occupiedBeds =
+                    row.available_beds
+                    * (row.bed_occupancy / 100);
+
+                return sum + occupiedBeds;
+            },
+            0
+        );
+    });
+
+
+    // Erstes Jahr als Basis = 100
+    const firstHotels =
+        hotelsPerYear[0];
+
+    const firstOccupiedBeds =
+        occupiedBedsPerYear[0];
+
+
+    // Hotels indexieren
+    const hotelIndex =
+        hotelsPerYear.map(
+            (value) =>
+                (value / firstHotels) * 100
+        );
+
+
+    // Belegte Betten indexieren
+    const bedsIndex =
+        occupiedBedsPerYear.map(
+            (value) =>
+                (value / firstOccupiedBeds) * 100
+        );
+
+
+    // Farben aus dem CSS holen
+    const styles =
+        getComputedStyle(document.documentElement);
+
+    const blue =
+        styles.getPropertyValue('--bar-blue').trim();
+
+    const brown =
+        styles.getPropertyValue('--bar-brown').trim();
+
+
+    // Chart erstellen
+    new Chart(
+        document.querySelector('#hotelsBedsChart'),
+        {
+            type: 'line',
+
+            data: {
+                labels: years,
+
+                datasets: [
+
+                    // Linie Hotels
+                    {
+                        label: 'Hotels',
+                        data: hotelIndex,
+
+                        borderColor: blue,
+                        borderWidth: 4,
+                        backgroundColor: blue,
+
+                        pointRadius: 0,
+                        tension: 0.2
+                    },
+
+
+                    // Linie belegte Betten
+                    {
+                        label: 'Belegte Betten',
+                        data: bedsIndex,
+
+                        borderColor: brown,
+                        borderWidth: 4,
+                        backgroundColor: brown,
+
+                        pointRadius: 0,
+                        tension: 0.2
+                    }
+                ]
+            },
+
+
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+
+
+                interaction: {
+                    mode: 'nearest',
+                    intersect: false
+                },
+
+
+                plugins: {
+
+                    // Legende anzeigen
+                    legend: {
+                        display: true,
+
+                        // Kleine ausgefüllte Farbquadrate
+                        labels: {
+                            usePointStyle: true,
+                            pointStyle: 'rect',
+                            boxWidth: 10,
+                            boxHeight: 10
+                        }
+                    },
+
+
+                    // Tooltip
+                    tooltip: {
+
+                        callbacks: {
+
+                            label: function(context) {
+
+                                return context.dataset.label
+                                    + ': '
+                                    + context.parsed.y.toFixed(1);
+                            }
+                        }
+                    }
+                },
+
+
+                scales: {
+
+                    // X-Achse = Jahre
+                    x: {
+
+                        title: {
+                            display: true,
+                            text: 'Jahr'
+                        }
+                    },
+
+
+                    // Y-Achse = Index
+                    y: {
+
+                        title: {
+                            display: true,
+                            text: 'Index (2005 = 100)'
+                        }
+                    }
+                }
+            }
+        }
+    );
+}
+
+
+// Grafik 3 starten
+loadHotelsBedsChart();
